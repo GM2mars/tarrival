@@ -29,6 +29,8 @@ export class Signal extends PureComponent<IProps> {
   setEvents = (): void => {
     window.addEventListener(
       EventsType.Resize,
+      //немного дебаунсим ресайз, вызываем апдейт что изменились размеры
+      //и колбеком передаем отрисовку графиков
       debounceEvent(this.forceUpdate.bind(this, this.drawSignals))
     );
     document.addEventListener(EventsType.Move, this.signalService.moveSliceTime);
@@ -48,9 +50,11 @@ export class Signal extends PureComponent<IProps> {
     const values: ISignalValue[] = this.props.values;
 
     const signals: ISignals[] = this.signalService.prepareSignalData(values);
+    //для отрисовки бейджев берем только отрезки с наличием сигнала
     const onSignalsFilter = (s: ISignals, i: number) => i && s.type === SignalTypes.Data;
 
     this.signalService.drawLine(signals);
+    //для отрисовки лейбла, берем только первый отрезок
     this.signalService.drawLabel([signals[0]]);
     this.signalService.drawBage(signals.filter(onSignalsFilter));
   }

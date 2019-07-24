@@ -20,6 +20,7 @@ export class SignalService {
   private setScale = (values: ISignalValue[]): void => {
     const clientWidth: number = this.svg.property('clientWidth');
 
+    //собираем все точки и вычисляем максимум и минимум
     const extent: [number, number] = d3.extent(values.reduce((res, v) => {
       res.push(v.from_ts, v.to_ts);
       return res;
@@ -29,16 +30,19 @@ export class SignalService {
       .domain(extent)
       .range([0, clientWidth]);
 
+    //зажимаем рейндж
     this.scale.clamp(true);
   }
 
   private setScaleColor = (values: ISignalValue[]): void => {
+    //собираем все точки и типы сигналов
     const signalZones = values.reduce((res, s, i, arr) => {
       const value = s.value ? SignalValues[s.value] : SignalValues.NoSignal;
 
       res.points.push(this.scale(s.from_ts));
       res.value.push(value);
 
+      //для последней точки берем последнее дначение времени
       if (i === arr.length - 1) {
         res.points.push(this.scale(s.to_ts));
       }
@@ -48,6 +52,7 @@ export class SignalService {
       { points: [], value: [] }
     );
 
+    //скейлим типы сигналов на временные отрезки
     this.scaleSignalValue = d3.scaleQuantile()
       .domain(signalZones.points)
       .range(signalZones.value);
@@ -59,6 +64,7 @@ export class SignalService {
     this.setScale(values);
     this.setScaleColor(values);
 
+    //подготавливаем данные для отрисовки на графике
     return values.map((s: ISignalValue): ISignals =>
       ({
         from: this.scale(s.from_ts),
@@ -70,6 +76,7 @@ export class SignalService {
     );
   }
 
+  //отрисовка основной линии сигнала
   drawLine = (signals: ISignals[]): void => {
     const toPath = d3.line();
     const signalLines: d3.Selection<any, ISignals, SVGElement, {}> = this.svg
@@ -94,6 +101,7 @@ export class SignalService {
       ]));
   }
 
+  //отрисовка лейбла вначале сигнала
   drawLabel = (signal: ISignals[]): void => {
     const signalLabel: d3.Selection<any, ISignals, SVGElement, {}> = this.svg
       .selectAll('g.svg-group-label')
@@ -123,6 +131,7 @@ export class SignalService {
       .text(d => signalConfig[d.value].text);
   }
 
+  //отрисовка бейджев (а ля колбаски =)
   drawBage = (signals: ISignals[]): void => {
     const signalBage: d3.Selection<any, ISignals, SVGElement, {}> = this.svg
       .selectAll('g.svg-group-bage')
@@ -162,6 +171,7 @@ export class SignalService {
     this.drawSliceTime(event.clientX, SliceTimeSelectors.Current);
   }
 
+  //отрисовка временного среза
   private drawSliceTime = (x: number, classSelector: SliceTimeSelectors): void => {
     const { left }: ClientRect = this.svgElement.getBoundingClientRect();
     const currentTime: number = this.scale.invert(x - left);

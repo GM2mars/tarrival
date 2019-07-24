@@ -6,18 +6,9 @@ import { ISignalData } from '../../interfaces';
 import { SignalTypes, SignalValues, EventsType } from '../../enums';
 import './Dashboard.style.less';
 
-interface IState {
-  staticTime: number;
-  currentTime: number;
-}
 
+export class Dashboard extends PureComponent<{}> {
 
-export class Dashboard extends PureComponent<{}, IState> {
-
-  readonly state: IState = {
-    staticTime: null,
-    currentTime: null
-  }
   private readonly svgRef: React.RefObject<SVGSVGElement> = React.createRef();
   private svg: SVGElement;
   private dashboardService: DashboardService;

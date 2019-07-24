@@ -3,9 +3,10 @@ import * as d3 from 'd3';
 import { ISignalValue } from '../../interfaces';
 import { AxisSelectors } from '../../enums';
 
+//отступ с левой стороны на расстояние названия сигнала
 const offsetRight = 200;
 
-
+//отрисовка таймлайна
 export class DashboardService {
 
   private svg: d3.Selection<SVGElement, {}, HTMLElement, any>;
@@ -26,7 +27,7 @@ export class DashboardService {
       return res;
     }, []));
 
-    //point X to time
+    //в этот раз скейлим наоборот, от длины графика к миллисекундам
     this.scale = d3.scaleLinear()
       .domain([offsetRight, clientWidth])
       .range(extent);
@@ -37,9 +38,11 @@ export class DashboardService {
   moveAxis = (event: MouseEvent): void => {
     const { clientX }: MouseEvent = event;
 
+    //если курсок в зоне шкалы графиков
     if (clientX > offsetRight) {
       this.drawAxis(clientX, AxisSelectors.Current);
 
+      //если задана референсная точка
       if (this.staticTimePoint) {
         this.drawCurrentOffsetTime(clientX);
       }
@@ -51,11 +54,12 @@ export class DashboardService {
 
     if (clientX > offsetRight) {
       this.staticTimePoint = this.scale(clientX);
-      this.drawAxis(event.clientX, AxisSelectors.Static);
-      this.drawStaticTime(event.clientX);
+      this.drawAxis(clientX, AxisSelectors.Static);
+      this.drawStaticTime(clientX);
     }
   }
 
+  //отрисовка оси Х
   private drawAxis = (x: number, classSelector: AxisSelectors): void => {
     const axis: d3.Selection<any, number, SVGElement, {}> = this.svg
       .selectAll(`line.${classSelector}`)
@@ -74,6 +78,8 @@ export class DashboardService {
       .attr('y2', this.clientHeight);
   }
 
+  //отрисовка лейбла для референсной временной точки
+  //я уже потом подумал, что удобнее бы было делать через div, а не через svg
   private drawStaticTime = (x: number): void => {
     const width = 200;
     const height = 24;
@@ -115,6 +121,7 @@ export class DashboardService {
       .attr('x', 50);
   }
 
+  //отрисовка лейбла для относительной временной точки
   private drawCurrentOffsetTime = (x: number): void => {
     const width = 53;
     const height = 24;
@@ -157,6 +164,7 @@ export class DashboardService {
       .attr('x', 7);
   }
 
+  //вычисление и форматирование относительной временной точки для лейбла
   private getDifferenceTimeFormat = (x: number): string => {
     const time = this.scale(x) - this.staticTimePoint;
     const sec = (time / 1000).toFixed(2);

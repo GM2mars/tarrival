@@ -4,7 +4,7 @@ import { Dashboard } from '../../components';
 import './DiagnosticPage.style.less';
 
 
-export class DiagnosticPage extends PureComponent<void> {
+export class DiagnosticPage extends PureComponent<{}> {
 
   render() {
     return (

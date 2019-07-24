@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: {
     client: path.join(__dirname, 'src/app.tsx'),
-    vendor: ['axios', 'react', 'react-dom']
+    vendor: ['react', 'react-dom', 'd3']
   },
   output: {
     path: path.resolve(__dirname, './public'),
