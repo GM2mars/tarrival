@@ -1,0 +1,45 @@
+@import '../../style/common.style.less';
+
+.signal-container {
+  width: 100%;
+  height: 42px;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+}
+
+.signal-name {
+  width: @signal-name-width;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 10px;
+  box-sizing: border-box;
+  color: #fff;
+  font-size: 0.9em;
+}
+
+.signal-graph {
+  display: inline-block;
+  height: 100%;
+  width: calc(100% - @signal-name-width);
+}
+
+line {
+  fill: transparent;
+  stroke-width: 1;
+}
+
+.svg-group-bage {
+  font-size: 0.75em;
+}
+
+.svg-current-slice,
+.svg-static-slice,
+.svg-group-label {
+  font-size: 0.75em;
+  font-weight: 600;
+}
+

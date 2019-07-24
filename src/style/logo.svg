@@ -1,0 +1,13 @@
+
+<svg width="88px" height="20px" viewBox="0 0 88 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Header/Popup" transform="translate(-15.000000, -14.000000)" fill="#282828">
+            <g id="Icons/default">
+                <polygon id="asterix" points="22.8781791 13.9997256 22.8781791 22.0055286 16.1219212 18.0027986 15 19.9967899 21.756258 23.9998628 15 28.0025928 16.1219212 29.996927 22.8781791 25.9938541 22.8781791 34 25.1220214 34 25.1220214 25.9938541 31.8782794 29.996927 33.0002005 28.0025928 26.2436084 23.9998628 33.0002005 19.9967899 31.8782794 18.0027986 25.1220214 22.0055286 25.1220214 13.9997256"></polygon>
+            </g>
+            <text id="ARRIVAL" font-family="Helvetica" font-size="14" font-weight="normal" fill-opacity="0.87">
+                <tspan x="48" y="30">ARRIVAL</tspan>
+            </text>
+        </g>
+    </g>
+</svg>
