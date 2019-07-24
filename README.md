@@ -1,5 +1,6 @@
 # Тестовое задание для ARRIVAL
 ![preview](https://github.com/GM2mars/tarrival/raw/master/preview.png)
+[посмотреть вживую](https://dev.gml.link)
 ## Исходные данные
 [ссылка на тестовое задание](https://gist.github.com/gomaxnn/687f1051c48f85a40ce89bcbf74ed275)
 
